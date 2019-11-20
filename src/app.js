@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('combined'));
 
 app.get('/', (req, res) => {
-  res.send({
+  res.json({
     status: 200,
     message: 'Successfully connected',
   });
