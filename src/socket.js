@@ -1,9 +1,16 @@
-const http = require('http');
-const io = require('socket.io')(http);
+const socketIo = require('socket.io');
 
-io.on('connection', socket => {
-  console.log(socket);
-  console.log('a user connected');
-});
+function init(server) {
+  const io = socketIo(server);
+  io.on('connection', socket => {
+    console.log(`${socket.id} user connected`);
 
-module.exports = io;
+    socket.emit('connected', socket.id);
+
+    socket.on('disconnect', () => {
+      console.log(`${socket.id} user disconnected`);
+    });
+  });
+}
+
+module.exports = { init };
